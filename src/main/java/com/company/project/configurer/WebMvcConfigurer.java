@@ -89,7 +89,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
                 } else if (e instanceof ServletException) {
                     result.setCode(ResultCode.FAIL).setMessage(e.getMessage());
                 } else if (e instanceof UnauthorizedException){
-                    result.setCode(ResultCode.UNAUTHORIZED).setMessage("权限不允许,请联系管理员");
+                    result.setCode(ResultCode.UNAUTHORIZED).setMessage("接口 [" + request.getRequestURI() + "] 权限不允许,请联系管理员");
                 } else {
                     result.setCode(ResultCode.INTERNAL_SERVER_ERROR).setMessage("接口 [" + request.getRequestURI() + "] 内部错误，请联系管理员");
                     String message;
