@@ -1,4 +1,4 @@
-package com.company.project.configurer;
+package com.company.project.shiro;
 
 
 import com.company.project.dao.PermissionDao;

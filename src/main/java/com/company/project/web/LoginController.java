@@ -48,6 +48,8 @@ public class LoginController {
             e.printStackTrace();
             return ResultGenerator.genFailResult("您的账号或密码输入错误");
         }
+        //在前后端分离的时候sessionID前端拿不到,返回给前端
+//        String sessionId = (String) subject.getSession().getId();
         return ResultGenerator.genSuccessResult();
     }
 

@@ -1,10 +1,10 @@
-package com.company.project.configurer;
+package com.company.project.shiro;
 
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.session.mgt.SessionManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -80,7 +80,19 @@ public class ShiroConfiguration {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(shiroRealm());
 //        securityManager.setCacheManager(ehCacheManager());
+        //是否使用自定义的session管理器,就是从header中取出sessionId(前后端项目)
+//        securityManager.setSessionManager(mySessionManager());
         return securityManager;
+    }
+
+    /**
+     * 自定义的mySessionManage处理类
+     * @return
+     */
+    @Bean("mySessionManager")
+    public SessionManager mySessionManager(){
+        MySessionManager mySessionManager = new MySessionManager();
+        return mySessionManager;
     }
 
     /**
@@ -93,9 +105,13 @@ public class ShiroConfiguration {
         shiroFilterFactoryBean.setSecurityManager(securityManager());
 
         Map<String, Filter> filters = new LinkedHashMap<String, Filter>();
-        LogoutFilter logoutFilter = new LogoutFilter();
-        logoutFilter.setRedirectUrl("/login");
+//        前后端分离,不需要服务器去重定向
+//        LogoutFilter logoutFilter = new LogoutFilter();
+//        logoutFilter.setRedirectUrl("/login");
 //        filters.put("logout",null);
+        // 这里使用自定义的filter,拦截指定级别的
+        filters.put("authc", new ShiroFormAuthenticationFilter());
+        filters.put("user", new ShiroFormAuthenticationFilter());
         shiroFilterFactoryBean.setFilters(filters);
         //这里是统一配置,也可以在controller方法上使用注解实现
         Map<String, String> filterChainDefinitionManager = new LinkedHashMap<String, String>();
