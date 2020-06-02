@@ -22,10 +22,10 @@ public class MySessionManager extends DefaultWebSessionManager{
     protected Serializable getSessionId(ServletRequest request, ServletResponse response) {
         HttpServletRequest httpServletRequest = WebUtils.toHttp(request);
         //TODO 注意,这个token是前端sessionId的key
-        String token = httpServletRequest.getHeader("token");
-        System.out.println("token："+token);
+        String token = httpServletRequest.getHeader("sessionId");
+        System.out.println("sessionId："+token);
         if(!StringUtils.isEmpty(token)){
-            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, "token");
+            request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_SOURCE, "sessionId");
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID, token);
             request.setAttribute(ShiroHttpServletRequest.REFERENCED_SESSION_ID_IS_VALID, Boolean.TRUE);
             return token;
