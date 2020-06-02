@@ -1,14 +1,11 @@
 package com.company.project.shiro;
 
-import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.CollectionUtils;
 import org.apache.shiro.web.filter.authz.RolesAuthorizationFilter;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Set;
 
 /**
  * Description: spring-boot-api-project-seed
@@ -17,25 +14,33 @@ import java.util.Set;
  */
 public class ShiroRolesAuthorizationFilter extends RolesAuthorizationFilter {
 
+    /**
+     * 排除是options
+     * @param request
+     * @param response
+     * @param mappedValue
+     * @return
+     * @throws IOException
+     */
     @Override
     public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
-
         //Always return true if the request's method is OPTIONS
         if (request instanceof HttpServletRequest) {
             if (((HttpServletRequest) request).getMethod().toUpperCase().equals("OPTIONS")) {
                 return true;
             }
         }
+        return super.isAccessAllowed(request, response, mappedValue);
+    }
 
-        Subject subject = getSubject(request, response);
-        String[] rolesArray = (String[]) mappedValue;
-
-        if (rolesArray == null || rolesArray.length == 0) {
-            //no roles specified, so nothing to check - allow access.
-            return true;
+    @Override
+    protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
+        //Always return true if the request's method is OPTIONS
+        if (request instanceof HttpServletRequest) {
+            if (((HttpServletRequest) request).getMethod().toUpperCase().equals("OPTIONS")) {
+                return true;
+            }
         }
-
-        Set<String> roles = CollectionUtils.asSet(rolesArray);
-        return subject.hasAllRoles(roles);
+        return super.preHandle(request, response);
     }
 }

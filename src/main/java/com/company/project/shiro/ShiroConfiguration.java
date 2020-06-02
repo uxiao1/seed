@@ -116,9 +116,9 @@ public class ShiroConfiguration {
         //这里是统一配置,也可以在controller方法上使用注解实现
         Map<String, String> filterChainDefinitionManager = new LinkedHashMap<String, String>();
         filterChainDefinitionManager.put("/logout", "logout");
-//        filterChainDefinitionManager.put("/user/**", "authc,roles[admin]");     //配置user路径下的需要admin角色才能访问
-//        filterChainDefinitionManager.put("/devlist/**", "authc,roles[admin]");     //配置user路径下的需要admin角色才能访问
-//        filterChainDefinitionManager.put("/illegaldevinfo/**", "authc,roles[admin]");     //配置illegaldevinfo路径下的需要认证之后才能访问
+//        filterChainDefinitionManager.put("/user/**", "roles[admin]");     //配置user路径下的需要admin角色才能访问
+//        filterChainDefinitionManager.put("/devlist/**", "roles[admin]");     //配置user路径下的需要admin角色才能访问
+//        filterChainDefinitionManager.put("/illegaldevinfo/**", "roles[admin]");     //配置illegaldevinfo路径下的需要认证之后才能访问
 //        //user 和 authc 区别: user是登陆过就可以,而authc要检验才行
 //        filterChainDefinitionManager.put("/devlasteststate/**", "user");     //配置illegaldevinfo路径下的需要认证之后才能访问
 //        filterChainDefinitionManager.put("/devhistorystate/**", "user");     //配置illegaldevinfo路径下的需要认证之后才能访问
