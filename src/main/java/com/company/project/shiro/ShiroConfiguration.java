@@ -110,7 +110,7 @@ public class ShiroConfiguration {
 //        logoutFilter.setRedirectUrl("/login");
 //        filters.put("logout",null);
         // 这里使用自定义的filter,拦截指定级别的
-        filters.put("authc", new ShiroFormAuthenticationFilter());
+        filters.put("roles", new ShiroRolesAuthorizationFilter());
         filters.put("user", new ShiroFormAuthenticationFilter());
         shiroFilterFactoryBean.setFilters(filters);
         //这里是统一配置,也可以在controller方法上使用注解实现
