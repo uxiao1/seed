@@ -13,7 +13,6 @@ import java.util.Set;
 /**
  * Description: spring-boot-api-project-seed
  * Created by hua on 2020/6/2 11:35
- *	½ÇÉ«À¹½ØÆ÷
  * @author: wwh
  */
 public class ShiroRolesAuthorizationFilter extends RolesAuthorizationFilter {
